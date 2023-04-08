@@ -1,0 +1,7 @@
+main
+**/build
+*.a
+
+benchmarks/*.csv
+
+valgrind-out.txt
