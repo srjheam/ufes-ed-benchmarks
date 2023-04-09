@@ -3,11 +3,16 @@
 
 #include "vector.h"
 
-Vector *vector_construct() {
+Vector *vector_construct() { return vector_construct_i(25); }
+
+Vector *vector_construct_i(int n) {
+    if (n < 1)
+        return NULL;
+
     Vector *v = calloc(1, sizeof *v);
 
-    v->data = calloc(25, sizeof v->data);
-    v->allocated = 25;
+    v->data = calloc(n, sizeof v->data);
+    v->allocated = n;
 
     return v;
 }
@@ -65,15 +70,18 @@ data_type vector_pop_back(Vector *v) { return vector_remove(v, v->size - 1); }
 void vector_insert(Vector *v, int i, data_type val) {
     if (v->size == v->allocated) {
         v->allocated *= 2;
-        v->data = realloc(v->data, v->allocated);
+        v->data = realloc(v->data, v->allocated * sizeof v->data);
     }
 
-    memmove(v->data + i + 1, v->data + i, (v->size - i) * sizeof(data_type));
+    memmove(v->data + i + 1, v->data + i,
+                (v->size - i) * sizeof(data_type));
 
     v->data[i] = val;
 
     v->size++;
 }
+
+void vector_replace(Vector *v, int i, data_type val) { v->data[i] = val; }
 
 // Troca os elementos das posições i e j (i vira j e j vira i)
 void vector_swap(Vector *v, int i, int j) {
@@ -101,13 +109,21 @@ void vector_sort(Vector *v) {
 
 // Retorna o indice de val usando busca binaria. Retorna -1 se nao encontrado.
 int vector_binary_search(Vector *v, data_type val) {
-    data_type *found =
-        bsearch(&val, v->data, v->size, sizeof(data_type), (cpy_fn)dt_cmp);
+    int r = v->size - 1;
+    int l = 0;
 
-    if (!found)
-        return -1;
+    while (l <= r) {
+        int m = (l + r) / 2;
 
-    return found - v->data;
+        if (dt_cmp(&v->data[m], &val) == 0)
+            return m;
+        else if (dt_cmp(&v->data[m], &val) < 0)
+            l = m + 1;
+        else
+            r = m - 1;
+    }
+
+    return -1;
 }
 
 // Inverte o vetor in-place (sem criar um novo vetor)
