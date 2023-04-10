@@ -7,9 +7,9 @@
 #include "profiler.h"
 #include "vector.h"
 
-#define N 1e6
+#define N 140000
 #define M 1000
-#define STEP 1e3
+#define STEP 200
 
 Vector *vector_randomly_sorted(int n) {
     // Following

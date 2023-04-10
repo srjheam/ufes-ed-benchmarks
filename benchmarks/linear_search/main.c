@@ -6,9 +6,9 @@
 #include "vector.h"
 #include "profiler.h"
 
-#define N 10000
-#define M 200
-#define STEP 2000
+#define N 140000
+#define M 1000
+#define STEP 200
 
 int main()
 {
