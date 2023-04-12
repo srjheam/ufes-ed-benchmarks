@@ -27,7 +27,7 @@ double duracao_caso(Vector *v, int idx) {
 int main() {
     srand(time(NULL));
 
-    printf("N menor maior media primeiroElem ultimoElem\n");
+    printf("N menor maior media melhorElem piorElem\n");
 
     for (int n = 1; n <= N + 1; n += STEP) {
         Vector *v = vector_construct();
