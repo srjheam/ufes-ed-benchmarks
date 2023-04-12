@@ -138,15 +138,16 @@ static int dt_cmp(const data_type *a, const data_type *b) { return *a - *b; }
 
 // Ordena o vetor in-place (sem criar um novo vetor)
 void vector_sort(Vector *v) {
-    int swop = 0;
-    do {
+    int swop = 1;
+    for (int i = 0; i < v->size && swop; i++)
+    {    
         swop = 0;
-        for (int j = 1; j < v->size; j++)
+        for (int j = 1; j < v->size - i; j++)
             if (dt_cmp(&v->data[j - 1], &v->data[j]) > 0) {
                 vector_swap(v, j - 1, j);
                 swop = 1;
             }
-    } while (swop);
+    }
 }
 
 // Retorna o indice de val usando busca binaria. Retorna -1 se nao encontrado.
