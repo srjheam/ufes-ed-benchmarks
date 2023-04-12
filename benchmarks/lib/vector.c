@@ -1,5 +1,6 @@
 #include "stdlib.h"
 #include "string.h"
+#include "math.h"
 
 #include "vector.h"
 
@@ -13,6 +14,48 @@ Vector *vector_construct_i(int n) {
 
     v->data = calloc(n, sizeof v->data);
     v->allocated = n;
+
+    return v;
+}
+
+Vector *vector_randomly_constructed(int n) {
+    Vector *v = vector_construct();
+
+    for (int i = 0; i < n; i++)
+        vector_push_back(v, rand());
+
+    return v;
+}
+
+Vector *vector_randomly_sorted(int n) {
+    // Following
+    // https://stackoverflow.com/a/66366347/12511877
+
+    Vector *v = vector_construct_i(n);
+
+    int max = __INT_MAX__;
+
+    for (int i = n; i > 0; i--) {
+        max = max * pow(rand() / (double)RAND_MAX, 1 / (double)i);
+
+        v->data[i - 1] = max;
+        v->size++;
+    }
+
+    return v;
+}
+
+Vector *vector_randomly_reversed(int n) {
+    Vector *v = vector_construct_i(n);
+
+    int max = __INT_MAX__;
+
+    for (int i = n; i > 0; i--) {
+        max = max * pow(rand() / (double)RAND_MAX, 1 / (double)i);
+
+        v->data[n - i] = max;
+        v->size++;
+    }
 
     return v;
 }
@@ -73,8 +116,7 @@ void vector_insert(Vector *v, int i, data_type val) {
         v->data = realloc(v->data, v->allocated * sizeof v->data);
     }
 
-    memmove(v->data + i + 1, v->data + i,
-                (v->size - i) * sizeof(data_type));
+    memmove(v->data + i + 1, v->data + i, (v->size - i) * sizeof(data_type));
 
     v->data[i] = val;
 

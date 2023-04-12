@@ -16,6 +16,12 @@ Vector *vector_construct();
 
 Vector *vector_construct_i(int n);
 
+Vector *vector_randomly_sorted(int n);
+
+Vector *vector_randomly_reversed(int n);
+
+Vector *vector_randomly_constructed(int n);
+
 // Adiciona um elemento no final do vetor
 void vector_push_back(Vector *v, data_type val);
 

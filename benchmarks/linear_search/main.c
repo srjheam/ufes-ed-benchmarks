@@ -30,10 +30,7 @@ int main() {
     printf("N menor maior media melhorElem piorElem\n");
 
     for (int n = 1; n <= N + 1; n += STEP) {
-        Vector *v = vector_construct();
-
-        for (int i = 0; i < n; i++)
-            vector_push_back(v, rand());
+        Vector *v = vector_randomly_constructed(n);
 
         double min = 0;
         double total = 0;
