@@ -11,24 +11,6 @@
 #define M 1000
 #define STEP 200
 
-Vector *vector_randomly_sorted(int n) {
-    // Following
-    // https://stackoverflow.com/a/66366347/12511877
-
-    Vector *v = vector_construct_i(n);
-
-    int max = __INT_MAX__;
-
-    for (int i = n; i > 0; i--) {
-        max = max * pow(rand() / (double)RAND_MAX, 1 / (double)i);
-
-        v->data[i - 1] = max;
-        v->size++;
-    }
-
-    return v;
-}
-
 double duracao_caso(Vector *v, int idx) {
     int valor = vector_get(v, idx);
 
