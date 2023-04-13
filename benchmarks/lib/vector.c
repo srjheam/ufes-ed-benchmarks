@@ -1,6 +1,6 @@
+#include "math.h"
 #include "stdlib.h"
 #include "string.h"
-#include "math.h"
 
 #include "vector.h"
 
@@ -132,15 +132,14 @@ void vector_swap(Vector *v, int i, int j) {
     v->data[j] = tmp;
 }
 
-typedef int (*cpy_fn)(const void *, const void *);
+typedef int (*cmp_fn)(const void *, const void *);
 
 static int dt_cmp(const data_type *a, const data_type *b) { return *a - *b; }
 
 // Ordena o vetor in-place (sem criar um novo vetor)
 void vector_sort(Vector *v) {
     int swop = 1;
-    for (int i = 0; i < v->size && swop; i++)
-    {    
+    for (int i = 0; i < v->size && swop; i++) {
         swop = 0;
         for (int j = 1; j < v->size - i; j++)
             if (dt_cmp(&v->data[j - 1], &v->data[j]) > 0) {
@@ -148,6 +147,49 @@ void vector_sort(Vector *v) {
                 swop = 1;
             }
     }
+}
+
+void jswap(void *a, void *b, size_t size) {
+    void *tmp = malloc(size);
+    tmp = memcpy(tmp, a, size);
+
+    memcpy(a, b, size);
+    memcpy(b, tmp, size);
+
+    free(tmp);
+}
+
+int partition(char *base, size_t size, cmp_fn compar, int e, int d) {
+    void *pivot = base + d * size;
+    int i = (e - 1);
+
+    for (int j = e; j <= d - 1; j++) {
+        if (compar(base + j * size, pivot) <= 0) {
+            i++;
+            jswap(base + i * size, base + j * size, size);
+        }
+    }
+    jswap(base + (i + 1) * size, pivot, size);
+
+    return (i + 1);
+}
+
+void quickSort(void *base, size_t size, cmp_fn compar, int e, int d) {
+    if (e < d) {
+        int pivot = partition(base, size, compar, e, d);
+
+        quickSort(base, size, compar, e, pivot - 1);
+        quickSort(base, size, compar, pivot + 1, d);
+    }
+}
+
+void jqsort(void *base, size_t nmemb, size_t size, cmp_fn compar) {
+    quickSort(base, size, (cmp_fn)compar, 0, nmemb - 1);
+}
+
+void vector_qsort(Vector *v) {
+    //qsort(v->data, v->size, sizeof(data_type), (cmp_fn)dt_cmp);
+    jqsort(v->data, v->size, sizeof(data_type), (cmp_fn)dt_cmp);
 }
 
 // Retorna o indice de val usando busca binaria. Retorna -1 se nao encontrado.

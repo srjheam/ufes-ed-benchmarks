@@ -55,6 +55,8 @@ void vector_swap(Vector *v, int i, int j);
 // Ordena o vetor in-place (sem criar um novo vetor)
 void vector_sort(Vector *v);
 
+void vector_qsort(Vector *v);
+
 // Retorna o indice de val usando busca binaria. Retorna -1 se nao encontrado.
 int vector_binary_search(Vector *v, data_type val);
 
