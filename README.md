@@ -4,7 +4,7 @@
 
 ## Sobre
 
-Esse projeto foi desenvolvido como parte do laboratório de estrutura de dados ministrado pelo professor Felipe Mutz (@filipemtz).
+Esse projeto foi desenvolvido como parte do laboratório de estrutura de dados ministrado pelo professor Felipe Mutz ([@filipemtz](https://github.com/filipemtz)).
 
 ## Começando
 
