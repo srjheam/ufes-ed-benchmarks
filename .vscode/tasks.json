@@ -14,5 +14,18 @@
         "isDefault": true
       }
     },
+    {
+      "type": "shell",
+      "label": "build quicksort",
+      "options": {
+        "cwd": "${workspaceFolder}/benchmarks/quicksort"
+      },
+      "command": "make",
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
   ]
 }
